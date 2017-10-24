@@ -23,7 +23,7 @@ namespace algo
 	void swap(T *arr, unsigned int i1, unsigned int i2)
 	{
 		T temp;
-		temp = i1;
+		temp = arr[i1];
 		arr[i1] = arr[i2];
 		arr[i2] = temp;
 	}
