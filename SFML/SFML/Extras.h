@@ -1,10 +1,10 @@
 #pragma once
 #include <SFML\Graphics.hpp>
-#include "Polygon2D.h"
-
-#include "Polygon2D.cpp"
-#include "Line2D.cpp"
-#include "Point2D.cpp"
+//#include "Polygon2D.h"
+//
+//#include "Polygon2D.cpp"
+//#include "Line2D.cpp"
+//#include "Point2D.cpp"
 
 namespace esf
 {
@@ -20,16 +20,16 @@ namespace esf
 		return rect;
 	}
 
-	sf::ConvexShape getShape(const Polygon2D &poly, const sf::Color &color = sf::Color::White)
-	{
-		sf::ConvexShape shape(poly.size());
+	//sf::ConvexShape getShape(const Polygon2D &poly, const sf::Color &color = sf::Color::White)
+	//{
+	//	sf::ConvexShape shape(poly.size());
 
-		for (int i = 0; i < poly.size(); i++)
-		{
-			shape.setPoint(i, sf::Vector2f(poly.get(i).get().x, poly.get(i).get().y));
-		}
-		shape.setFillColor(color);
+	//	for (int i = 0; i < poly.size(); i++)
+	//	{
+	//		shape.setPoint(i, sf::Vector2f(poly.get(i).get().x, poly.get(i).get().y));
+	//	}
+	//	shape.setFillColor(color);
 
-		return shape;
-	}
+	//	return shape;
+	//}
 }
