@@ -2,8 +2,10 @@
 #include <SFML/Graphics.hpp>
 
 #include "Extras.h"
+#include "Graph.h"
+#include "Axis.h"
 
-int main()
+void test()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
 	//sf::CircleShape shape(100.f);
@@ -81,6 +83,56 @@ int main()
 		//window.draw(l1);
 		//window.draw(poly_shape);
 		//window.draw(shape);
+		window.display();
+	}
+}
+
+int main()
+{
+	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
+
+	srand(time(NULL));
+
+	window.setFramerateLimit(144);
+
+	bool mouse_button_held = false;
+
+	Axis axis_cross(window, sf::Color::Black);
+
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+			else if (event.type == sf::Event::MouseButtonPressed)
+			{
+				if (event.mouseButton.button == 0) //Left mouse button.
+				{
+					mouse_button_held = true;
+					axis_cross.scaleX(-1.0f);
+				}
+				else if (event.mouseButton.button == 1) //Right mouse button.
+				{
+					axis_cross.scaleX(-2.0f);
+				}
+			}
+			else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == 0)
+			{
+				mouse_button_held = false;
+			}
+			else if (mouse_button_held && event.type == sf::Event::MouseMoved)  //Mouse drag.
+			{
+				break;
+			}
+		}
+
+
+		window.clear(sf::Color(200,200,200,255));
+
+		axis_cross.draw();
+
 		window.display();
 	}
 
