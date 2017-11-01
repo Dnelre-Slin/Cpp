@@ -4,6 +4,7 @@
 #include "Extras.h"
 #include "Graph.h"
 #include "Axis.h"
+#include <string>
 
 void test()
 {
@@ -89,6 +90,13 @@ void test()
 
 int main()
 {
+	char arr[4] = "hei";
+	std::string s;
+
+	s = arr;
+
+	std::cout << s[1] << '\n';
+
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
 
 	srand(time(NULL));
@@ -111,11 +119,11 @@ int main()
 				if (event.mouseButton.button == 0) //Left mouse button.
 				{
 					mouse_button_held = true;
-					axis_cross.scaleX(-1.0f);
+					axis_cross.scaleX(0.5f);
 				}
 				else if (event.mouseButton.button == 1) //Right mouse button.
 				{
-					axis_cross.scaleX(-2.0f);
+					axis_cross.scaleX(2.0f);
 				}
 			}
 			else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == 0)
@@ -125,6 +133,15 @@ int main()
 			else if (mouse_button_held && event.type == sf::Event::MouseMoved)  //Mouse drag.
 			{
 				break;
+			}
+			else if (event.type == sf::Event::MouseWheelScrolled && event.mouseWheelScroll.delta > 0)
+			{
+				axis_cross.scaleX(1.0f + (event.mouseWheelScroll.delta / 10));
+			}
+			else if (event.type == sf::Event::MouseWheelScrolled && event.mouseWheelScroll.delta < 0)
+			{
+				//axis_cross.scaleX(1.0f / (1.0f + (event.mouseWheelScroll.delta / 10)));
+				axis_cross.scaleX(1.0f / pow(1.1f,-event.mouseWheelScroll.delta));
 			}
 		}
 

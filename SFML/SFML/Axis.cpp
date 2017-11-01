@@ -48,8 +48,10 @@ void Axis::scaleX(float scale_value)
 	//	xMark.move(scale_value * (m_y_axis.getPosition().x - xMark.getPosition().x), 0.0f);	
 	for (sf::RectangleShape &xMark : m_x_axis_marks)
 	{
-		std::cout << (m_y_axis.getPosition().x - xMark.getPosition().x) << '\n';
-		xMark.move(scale_value * (m_y_axis.getPosition().x - xMark.getPosition().x), 0.0f);
+		//std::cout << (m_y_axis.getPosition().x - xMark.getPosition().x) << '\n';
+		//xMark.move(scale_value * (m_y_axis.getPosition().x - xMark.getPosition().xdc), 0.0f);
+		xMark.setPosition((scale_value * (xMark.getPosition().x - m_y_axis.getPosition().x)) +
+										  m_y_axis.getPosition().x, xMark.getPosition().y);
 	}
 }
 
