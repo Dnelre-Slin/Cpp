@@ -13,7 +13,7 @@ void test()
 	//shape.setFillColor(sf::Color::Green);
 
 	//sf::RectangleShape l1 = esf::getLine(sf::Vector2f(400, 300), sf::Vector2f(400, 200), 2.0f);
-	srand(time(NULL));
+	srand((unsigned int)time(0));
 
 	sf::RectangleShape floor = esf::getLine(sf::Vector2f(0, 250), sf::Vector2f(500, 600), 1.0f);
 	floor.setFillColor(sf::Color::Green);
@@ -45,7 +45,7 @@ void test()
 				if (event.mouseButton.button == 0) //Left mouse button.
 				{
 					mouse_button_held = true;
-					box2.setOrigin(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
+					box2.setOrigin(sf::Vector2f((float)event.mouseButton.x, (float)event.mouseButton.y));
 				}
 				else if (event.mouseButton.button == 1) //Right mouse button.
 				{
@@ -92,7 +92,7 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
 
-	srand(time(NULL));
+	srand((unsigned int)time(0));
 
 	window.setFramerateLimit(144);
 
@@ -114,8 +114,8 @@ int main()
 				if (event.mouseButton.button == 0) //Left mouse button.
 				{
 					mouse_button_held = true;
-					mouse_moved.x = event.mouseButton.x;
-					mouse_moved.y = event.mouseButton.y;
+					mouse_moved.x = (float)event.mouseButton.x;
+					mouse_moved.y = (float)event.mouseButton.y;
 					axis_cross.printScale();
 					//axis_cross.scaleX(0.5f);
 				}
@@ -131,13 +131,13 @@ int main()
 			else if (mouse_button_held && event.type == sf::Event::MouseMoved)  //Mouse drag.
 			{
 				axis_cross.move(sf::Vector2f(event.mouseMove.x - mouse_moved.x, event.mouseMove.y - mouse_moved.y));
-				mouse_moved.x = event.mouseMove.x;
-				mouse_moved.y = event.mouseMove.y;
+				mouse_moved.x = (float)event.mouseMove.x;
+				mouse_moved.y = (float)event.mouseMove.y;
 				break;
 			}
 			else if (event.type == sf::Event::MouseWheelScrolled && event.mouseWheelScroll.delta > 0)
 			{
-				axis_cross.scale(1.0f + (event.mouseWheelScroll.delta / 10));
+				axis_cross.scale(1.0f + (event.mouseWheelScroll.delta / 10.0f));
 			}
 			else if (event.type == sf::Event::MouseWheelScrolled && event.mouseWheelScroll.delta < 0)
 			{
