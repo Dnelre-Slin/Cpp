@@ -88,6 +88,13 @@ void test()
 	}
 }
 
+float mathFunc(float x)
+{
+	//return powf(x,2.0f);
+	//return 0.5f* x + 10.0f;
+	return 3*sinf(x)+10;
+}
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
@@ -99,6 +106,12 @@ int main()
 	bool mouse_button_held = false;
 
 	Axis axis_cross(window, sf::Color::Black);
+
+	Graph graph(mathFunc, sf::Color::Red);
+	Graph co_graph(cosf, sf::Color::Blue);
+
+	axis_cross.addGraph(graph);
+	axis_cross.addGraph(co_graph);
 
 	sf::Vector2f mouse_moved(0.0f, 0.0f);
 

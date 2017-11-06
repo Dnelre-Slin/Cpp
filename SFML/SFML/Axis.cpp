@@ -117,6 +117,11 @@ void Axis::move(const sf::Vector2f & vector)
 	m_y_axis.move(vector.x, 0);
 }
 
+void Axis::addGraph(const Graph &graph)
+{
+	m_graphs.push_back(graph);
+}
+
 void Axis::draw()
 {
 	m_window->draw(m_x_axis);
@@ -124,6 +129,11 @@ void Axis::draw()
 
 	drawXmarks(m_x_mark_spacing, m_x_axis.getFillColor());
 	drawYmarks(m_y_mark_spacing, m_y_axis.getFillColor());
+
+	for (Graph g : m_graphs)
+	{
+		g.draw(*m_window, sf::Vector2f(m_y_axis.getPosition().x, m_x_axis.getPosition().y), m_x_mark_spacing, m_y_mark_spacing);
+	}
 
 	//setupDraw(spacing, m_x_axis.getFillColor());
 

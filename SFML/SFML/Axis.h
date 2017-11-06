@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "Extras.h"
+#include "Graph.h"
 
 class Axis
 {
@@ -12,6 +13,8 @@ private:
 	//std::vector<sf::RectangleShape> m_y_axis_marks;
 
 	sf::RenderWindow *m_window;
+
+	std::vector<Graph> m_graphs;
 
 	float m_x_mark_spacing;
 	float m_y_mark_spacing;
@@ -32,6 +35,8 @@ public:
 	void move(const sf::Vector2f &vector);
 
 	inline void printScale() { std::cout << "X scale: " << m_x_mark_spacing << "  |  Y scale : " << m_y_mark_spacing << '\n'; }
+
+	void addGraph(const Graph &graph);
 
 	void draw();
 };

@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="Axis.cpp" />
     <ClCompile Include="Extras.cpp" />
+    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Object.cpp" />
   </ItemGroup>
