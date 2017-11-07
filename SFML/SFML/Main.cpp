@@ -93,7 +93,7 @@ float mathFunc(float x)
 	//return powf(x,2.0f);
 	//return 0.5f* x + 10.0f;
 	//return 3*sinf(x)+10;
-	return powf(x, 5) - 3 * powf(x, 3) + powf(x, 2) + 2 * x - 5;
+	//return powf(x, 5) - 3 * powf(x, 3) + powf(x, 2) + 2 * x - 5;
 	//float PI = 3.141592653589793;
 	//float sum_result = 0;
 	//
@@ -103,6 +103,15 @@ float mathFunc(float x)
 	//}
 
 	//return 1 + (2 / PI) * sum_result;
+
+	float sum = 0;
+	for (unsigned int n = 0; n < 9; n++)
+	{
+		sum += (n + 1)*powf(x, 10 - n);
+	}
+	return sum;
+
+	//return x;
 }
 
 int main()

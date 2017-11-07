@@ -120,7 +120,7 @@ void Axis::move(const sf::Vector2f & vector)
 void Axis::addGraph(const Graph &graph)
 {
 	m_graphs.push_back(graph);
-	m_graphs[m_graphs.size() - 1].update(sf::Vector2f(m_y_axis.getPosition().x, m_x_axis.getPosition().y), m_x_mark_spacing, m_y_mark_spacing);
+	//m_graphs[m_graphs.size() - 1].update(sf::Vector2f(m_y_axis.getPosition().x, m_x_axis.getPosition().y), m_x_mark_spacing, m_y_mark_spacing);
 }
 
 void Axis::draw()
