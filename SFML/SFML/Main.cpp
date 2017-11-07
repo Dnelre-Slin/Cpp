@@ -92,7 +92,17 @@ float mathFunc(float x)
 {
 	//return powf(x,2.0f);
 	//return 0.5f* x + 10.0f;
-	return 3*sinf(x)+10;
+	//return 3*sinf(x)+10;
+	return powf(x, 5) - 3 * powf(x, 3) + powf(x, 2) + 2 * x - 5;
+	//float PI = 3.141592653589793;
+	//float sum_result = 0;
+	//
+	//for (unsigned int n = 1; n < 100; n++)
+	//{
+	//	sum_result += ((cosf((2 * PI*n) / 3) - 1) / n) * sin((2 * PI*n*x) / 3);
+	//}
+
+	//return 1 + (2 / PI) * sum_result;
 }
 
 int main()
@@ -107,11 +117,11 @@ int main()
 
 	Axis axis_cross(window, sf::Color::Black);
 
-	Graph graph(mathFunc, sf::Color::Red);
-	Graph co_graph(cosf, sf::Color::Blue);
+	Graph graph(window, mathFunc, sf::Color::Red);
+	//Graph co_graph(cosf, sf::Color::Blue);
 
 	axis_cross.addGraph(graph);
-	axis_cross.addGraph(co_graph);
+	//axis_cross.addGraph(co_graph);
 
 	sf::Vector2f mouse_moved(0.0f, 0.0f);
 
