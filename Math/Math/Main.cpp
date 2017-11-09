@@ -2,6 +2,7 @@
 #include <string>
 #include "DoubleFraction.h"
 #include "Fraction.h"
+#include "Matrix.h"
 
 void test(double d)
 {
@@ -124,11 +125,66 @@ void test3()
 	printf("PI = %.40f\n", pi2);
 }
 
+template <class T>
+void printV(std::vector<T> v)
+{
+	std::cout << "[  ";
+	for (T &t : v)
+	{
+		std::cout << t << "  ";
+	}
+	std::cout << "]\n";
+}
+
+void test4()
+{
+	std::vector<std::vector<float>> mat;
+	mat.push_back(std::vector<float>(3, 2));
+	mat[0][1] = 1.5;
+	mat[0][2] = 0.5;
+	//mat[0][3] = 1;
+	//mat[0][4] = 2;
+	mat.push_back(std::vector<float>(3, 1));
+	mat[1][1] = 1.5;
+	mat[1][2] = -0.5;
+	//mat[1][3] = 1;
+	//mat[1][4] = 2;
+	mat.push_back(std::vector<float>(3, -1));
+	mat[2][1] = -1.5;
+	mat[2][2] = 0.5;
+	//mat[2][3] = 1;
+	//mat[2][4] = 2;
+	//mat.push_back(std::vector<float>(5, 64));
+	//mat[3][1] = 16;
+	//mat[3][2] = 4;
+	//mat[3][3] = 1;
+	//mat[3][4] = 1;
+
+	Matrix matrix;
+	matrix.m_matrix = mat;
+	//matrix.add(1, 24);
+	//matrix.add(2, 25);
+	//matrix.add(3, 26);
+
+
+	matrix.printM();
+
+	~matrix;
+
+	std::cout << "\n\n";
+
+	matrix.printM();
+
+	//std::vector<float> v(5, 1);
+	//printV(v);
+}
+
 int main()
 {
 	//test1();
 	//test2();
-	test3();
+	//test3();
+	test4();
 	system("pause");
 	return 0;
 }

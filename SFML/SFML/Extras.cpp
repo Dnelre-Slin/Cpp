@@ -5,7 +5,7 @@ namespace esf
 	sf::RectangleShape getLine(const sf::Vector2f &point1, const sf::Vector2f &point2, float thickness, const sf::Color &color)
 	{
 		float length = sqrt(pow(point2.x - point1.x, 2.0f) + pow(point2.y - point1.y, 2.0f));
-		float angle = (180.0f / 3.141592653589793) * atan2f(point2.y - point1.y, point2.x - point1.x);
+		float angle = (180.0f / 3.141592653589793f) * atan2f(point2.y - point1.y, point2.x - point1.x);
 
 		sf::RectangleShape rect(sf::Vector2f(length, thickness));
 		rect.setPosition(point1);

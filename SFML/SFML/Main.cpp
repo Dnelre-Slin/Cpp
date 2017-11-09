@@ -1,10 +1,12 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Font.hpp>
 
 #include "Extras.h"
 #include "Graph.h"
 #include "Axis.h"
 #include <string>
+#include "Matrix.h"
 
 void test()
 {
@@ -97,21 +99,41 @@ float mathFunc(float x)
 	//float PI = 3.141592653589793;
 	//float sum_result = 0;
 	//
-	//for (unsigned int n = 1; n < 100; n++)
+	//for (unsigned int n = 1; n < 1000; n++)
 	//{
 	//	sum_result += ((cosf((2 * PI*n) / 3) - 1) / n) * sin((2 * PI*n*x) / 3);
 	//}
 
 	//return 1 + (2 / PI) * sum_result;
 
-	float sum = 0;
-	for (unsigned int n = 0; n < 9; n++)
-	{
-		sum += (n + 1)*powf(x, 10 - n);
-	}
-	return sum;
+	//float sum = 0;
+	//for (unsigned int n = 0; n < 9; n++)
+	//{
+	//	sum += (n + 1)*powf(x, 10 - n);
+	//}
+	//return sum;
 
-	//return x;
+	return x;
+
+	//return (-0.5*powf(x, 2) + 2.5 * x - 1);
+}
+
+float mFunc(float x, float *parameters, const unsigned int size)
+{
+	float sum = 0;
+	for (register unsigned int i = 0; i < size; i++)
+	{
+		sum += parameters[i] * powf(x, (float)size - (float)i - 1.0f);
+	}
+	//std::cout << parameters[9] << " | " << parameters[10] << '\n';
+	//float sum = (parameters[0] * powf(x, 10) + parameters[1] * powf(x, 9) + parameters[2] * powf(x, 8) +
+	//		parameters[3] * powf(x, 7) + parameters[4] * powf(x, 6) + parameters[5] * powf(x, 5) +
+	//		parameters[6] * powf(x, 4) + parameters[7] * powf(x, 3) + parameters[8] * powf(x, 2) +
+	//		parameters[9] * x + parameters[10]);
+
+	return sum;
+	//return 0.5*x;
+	//return sum;
 }
 
 int main()
@@ -126,13 +148,79 @@ int main()
 
 	Axis axis_cross(window, sf::Color::Black);
 
-	Graph graph(window, mathFunc, sf::Color::Red);
+	Graph graph(mFunc, sf::Color::Red);
 	//Graph co_graph(cosf, sf::Color::Blue);
 
-	axis_cross.addGraph(graph);
 	//axis_cross.addGraph(co_graph);
 
 	sf::Vector2f mouse_moved(0.0f, 0.0f);
+
+	//std::vector<std::vector<float>> mat;
+
+	//std::vector<float> v;
+	//v.push_back(powf(30, 20));
+	//v.push_back(powf(20, 19));
+	//v.push_back(powf(10, 18));
+	//v.push_back(18);
+
+	//mat.push_back(v);
+	//v.clear();
+
+	//v.push_back(powf(23, 20));
+	//v.push_back(powf(12, 19));
+	//v.push_back(powf(5, 18));
+	//v.push_back(18);
+
+	//mat.push_back(v);
+	//v.clear();
+
+	//v.push_back(powf(29, 20));
+	//v.push_back(powf(21, 19));
+	//v.push_back(powf(14, 18));
+	//v.push_back(15);
+
+	//mat.push_back(v);
+
+
+	Matrix matrix;
+	//matrix.m_matrix = mat;
+	matrix.add(1, 24);
+	matrix.add(5, 24);
+	matrix.add(10, 25);
+	matrix.add(15, 25);
+	matrix.add(20, 26);
+	matrix.add(25, 25);
+	matrix.add(30, 24);
+	//matrix.add(13, 23);
+	//matrix.add(16, 21);
+	//matrix.add(19, 18);
+	//matrix.add(22, 21);
+	//matrix.add(25, 24);
+	//matrix.add(28, 26);
+	//matrix.add(11, 30);
+	//matrix.add(12, 24);
+	//matrix.add(13, 26);
+	//matrix.add(14, 24);
+	//matrix.add(15, 23);
+	//matrix.add(16, 21);
+	//matrix.add(17, 18);
+	//matrix.add(18, 21);
+	//matrix.add(19, 24);
+	//matrix.add(20, 26);
+	//matrix.add(21, 30);
+	matrix.printM();
+
+	std::cout << "\n\n";
+
+	~matrix;
+
+	matrix.printM();
+
+	matrix.printGauss();
+
+	graph.setParams(matrix.getGaused());
+
+	axis_cross.addGraph(graph);
 
 	while (window.isOpen())
 	{

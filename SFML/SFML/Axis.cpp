@@ -34,9 +34,11 @@ void Axis::drawXmarks(float _spacing, const sf::Color &color, float line_length,
 	float x_mark_spot = (float)((int)(roundf(m_y_axis.getPosition().x)) % spacing);
 	float y_mark_spot = (m_x_axis.getPosition().y - (line_length / 2.0f));
 
+	int count = 0;
 	while (x_mark_spot < m_window->getSize().x)
 	{
 		line_marker.setPosition(sf::Vector2f(x_mark_spot, y_mark_spot));
+		m_text.setString(esf::toStr(count++));
 		m_window->draw(line_marker);
 		x_mark_spot += spacing;
 	}
@@ -67,11 +69,21 @@ Axis::Axis(sf::RenderWindow &window, const sf::Color &color, float x_mark_spacin
 	float y_size = (float)(m_window->getSize().y);
 
 	m_x_axis = esf::getLine(sf::Vector2f(0.0f, y_size / 2.0f), sf::Vector2f(x_size, y_size / 2.0f), 1.0f, color);
+	//m_y_axis = esf::getLine(sf::Vector2f(20.0f, 0.0f), sf::Vector2f(20.0f, y_size), 1.0f, color);
 	m_y_axis = esf::getLine(sf::Vector2f(x_size / 3.0f, 0.0f), sf::Vector2f(x_size / 3.0f, y_size), 1.0f, color);
+	move(sf::Vector2f(-250, 0));
 
 	m_x_mark_spacing = x_mark_spacing;
 	m_y_mark_spacing = y_mark_spacing;
 	//setMarks(spacing, color);
+
+	//sf::Font font;
+	if (!m_font.loadFromFile("fonts/Raleway-Light.ttf"))
+		throw std::runtime_error("Font not found.");
+	sf::Text text;
+	text.setFont(m_font);
+	text.setCharacterSize(10);
+	text.setFillColor(sf::Color::Black);
 }
 
 void Axis::setColor(const sf::Color &color)

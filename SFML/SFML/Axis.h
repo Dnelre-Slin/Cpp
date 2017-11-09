@@ -19,6 +19,9 @@ private:
 	float m_x_mark_spacing;
 	float m_y_mark_spacing;
 
+	sf::Text m_text;
+	sf::Font m_font;
+
 	//void setMarks(float spacing, const sf::Color &color);
 	void drawXmarks(float spacing, const sf::Color &color, float line_length = 6.0f, float line_thickness = 1.0f);
 	void drawYmarks(float spacing, const sf::Color &color, float line_length = 6.0f, float line_thickness = 1.0f);

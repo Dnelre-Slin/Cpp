@@ -1,98 +1,39 @@
 #include <iostream>
 #include "Graph.h"
 
-Graph::Graph(const Graph &other)
+void Graph::set(float(*func)(float, float*, const unsigned int), const sf::Color &color)
 {
-	m_points = new sf::Vector2f[2000];
-	*this = other;
-}
-
-Graph &Graph::operator=(const Graph &other)
-{
-	m_window = other.m_window;
-	m_func = other.m_func;
-	m_color = other.m_color;
-	m_map_size = other.m_map_size;
-	m_precision = other.m_precision;
-
-	m_timer = other.m_timer;
-
-	m_array_size = other.m_array_size;
-	for (unsigned int i = 0; i < m_array_size; i++)
-	{
-		m_points[i] = other.m_points[i];
-	}
-
-	return *this;
-}
-
-void Graph::set(sf::RenderWindow &window, float(*func)(float), const sf::Color &color)
-{
-	m_window = &window;
-
 	m_func = func;
 	m_color = color;
-
-	m_precision = 0.1f;
-	m_map_size = 2 * (size_t)round(m_window->getSize().x * (1 / m_precision));
-	//m_point_map = sf::VertexArray(sf::Points, m_map_size);
-	m_array_size = 2000;
-	m_points = new sf::Vector2f[m_array_size];
-
-	m_timer = clock();
-}
-
-void Graph::update(const sf::Vector2f &origo, float x_spacing, float y_spacing)
-{
-	float x = -(float)((m_array_size * m_precision) / 2);
-	//float x = -(m_map_size * m_precision) / 4;
-
-	for (register int i = 0; i < (int)m_array_size; i++)
-	{
-		//m_point_map[i].position = sf::Vector2f(x, /*origo.y - y_spacing * */m_func((x - origo.x) / x_spacing));
-		m_points[i] = sf::Vector2f(x, m_func(x));
-		x += m_precision;
-	}
 }
 
 void Graph::draw(sf::RenderWindow &window, const sf::Vector2f &origo, float x_spacing, float y_spacing)
 {
-	//sf::RectangleShape draw_point(sf::Vector2f(1.0f,1.0f));
-	//draw_point.setFillColor(m_color);
-	//for (float x = 0.0f; x < window.getSize().x; x += 0.5f)
-	//{
-	//	//draw_point.setPosition(origo.x + x_spacing * x, m_func(origo.y - y_spacing * x));
-	//	//draw_point.setPosition(x, m_func(origo.y - y_spacing * ((x - origo.x) / x_spacing)));
-	//	draw_point.setPosition(x, origo.y - y_spacing * m_func((x - origo.x) / x_spacing));
-	//	//draw_point.setPosition(x, origo.y - y_spacing * m_func(x));
-	//	window.draw(draw_point);
-	//}
-	//float precision = 0.1f;
-	//size_t map_size = (size_t)round(window.getSize().x * (1 / precision));
 
-	//float x = 0.0f;
+	float x = 0.0f;
+	float precision = 0.05f;
 
-	//sf::VertexArray point_map(sf::Points, m_map_size);
-	//for (register int i = 0; i < m_map_size; i++)
-	//{
-	//	point_map[i].position = sf::Vector2f(x, origo.y - y_spacing * m_func((x - origo.x) / x_spacing));
-	//	point_map[i].color = m_color;
-	//	x += m_precision;
-	//}
+	size_t map_size = (size_t)roundf(window.getSize().x * (1 / precision));
 
-	if (clock() > m_timer + 1000)
+	//float params[] = { 0,(1.f/362880.f),0,(1.f / 5040.f),0,(1.f/120.f),0,(1.f/6.f),0,1,0 };
+	//float params[] = { 0,0,0,0,0,0,0,-0.5f,3.0f,-4.5f, 26.0f };
+	const unsigned int size = m_params.size();
+	float *my_arr = new float[size];
+	for (unsigned int i = 0; i < size; i++)
 	{
-		update(origo, x_spacing, y_spacing);
-		m_timer = clock();
+		my_arr[i] = m_params[i];
 	}
-	sf::VertexArray point_map(sf::Points, m_array_size);
-	for (register int i = 0; i < (int)m_array_size; i++)
+
+	sf::VertexArray point_map(sf::Points, map_size);
+	for (register unsigned int i = 0; i < map_size; i++)
 	{
-		//std::cout << "x : " << origo.x + x_spacing * m_point_map[i].position.x << "   y: " << origo.y + y_spacing * m_point_map[i].position.y;
-		point_map[i].position = sf::Vector2f(origo.x + x_spacing * m_points[i].x, origo.y + y_spacing * m_points[i].y);
+		point_map[i].position = sf::Vector2f(x, origo.y - y_spacing * m_func((x - origo.x) / x_spacing, my_arr, size));
 		point_map[i].color = m_color;
+		x += precision;
 	}
-	window.draw(point_map);
+	window.draw(point_map);	
 
-	std::cout << "x : " << origo.x + x_spacing * m_points[1000].x << "   y: " << origo.y + y_spacing * m_points[1000].y << '\n';
+	delete[] my_arr;
+
+	//std::cout << "x : " << origo.x + x_spacing * m_points[1000].x << "   y: " << origo.y + y_spacing * m_points[1000].y << '\n';
 }
