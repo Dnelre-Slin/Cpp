@@ -3,6 +3,7 @@
 #include <vector>
 #include "Extras.h"
 #include "Graph.h"
+#include "SpaceScaling.h"
 
 class Axis
 {
@@ -19,6 +20,9 @@ private:
 	float m_x_mark_spacing;
 	float m_y_mark_spacing;
 
+	SpaceScaling x_group;
+	SpaceScaling y_group;
+
 	sf::Text m_text;
 	sf::Font m_font;
 
@@ -27,7 +31,8 @@ private:
 	void drawYmarks(float spacing, const sf::Color &color, float line_length = 6.0f, float line_thickness = 1.0f);
 
 public:
-	Axis(sf::RenderWindow &window, const sf::Color &color = sf::Color::White, float x_mark_spacing = 15.0f, float y_mark_spacing = 15.0f);
+	Axis(sf::RenderWindow &window, float *x_spacing_groups, unsigned int x_spacing_groups_size, float *y_spacing_groups, unsigned int y_spacing_groups_size, 
+		 const sf::Color &color = sf::Color::White, float x_mark_spacing = 15.0f, float y_mark_spacing = 15.0f);
 
 	void setColor(const sf::Color &color);
 

@@ -118,7 +118,7 @@ float mathFunc(float x)
 	//return (-0.5*powf(x, 2) + 2.5 * x - 1);
 }
 
-float mFunc(float x, float *parameters, const unsigned int size)
+float mFunc2(float x, float *parameters, const unsigned int size)
 {
 	float sum = 0;
 	for (register unsigned int i = 0; i < size; i++)
@@ -131,9 +131,14 @@ float mFunc(float x, float *parameters, const unsigned int size)
 	//		parameters[6] * powf(x, 4) + parameters[7] * powf(x, 3) + parameters[8] * powf(x, 2) +
 	//		parameters[9] * x + parameters[10]);
 
-	return sum;
+	return -sum;
 	//return 0.5*x;
 	//return sum;
+}
+
+float mFunc(float x, float *parameters, const unsigned int size)
+{
+	return 0.000001828181565f * powf(x,6.f) - 0.000165292397661f * powf(x, 5.f) + 0.005664961013645f * powf(x, 4.f) - 0.09196418128655f *powf(x, 3.f) + 0.713937621832359f * powf(x, 2.f) - 2.194517543859649f * x + 25.567042606516292f;
 }
 
 int main()
@@ -146,7 +151,13 @@ int main()
 
 	bool mouse_button_held = false;
 
-	Axis axis_cross(window, sf::Color::Black);
+	const unsigned int x_space_size = 4;
+	float x_space[x_space_size] = { 1,10,60,600 };
+	const unsigned int y_space_size = 4;
+	float y_space[y_space_size] = { 1,10,100,1000 };
+
+
+	Axis axis_cross(window, x_space, x_space_size, y_space, y_space_size, sf::Color::Black);
 
 	Graph graph(mFunc, sf::Color::Red);
 	//Graph co_graph(cosf, sf::Color::Blue);
@@ -191,6 +202,7 @@ int main()
 	matrix.add(20, 26);
 	matrix.add(25, 25);
 	matrix.add(30, 24);
+
 	//matrix.add(13, 23);
 	//matrix.add(16, 21);
 	//matrix.add(19, 18);
@@ -208,6 +220,21 @@ int main()
 	//matrix.add(19, 24);
 	//matrix.add(20, 26);
 	//matrix.add(21, 30);
+
+	//matrix.add(1, 20);
+	//matrix.add(3, 21);
+	//matrix.add(5, 22);
+	//matrix.add(7, 23);
+	//matrix.add(10, 24);
+	//matrix.add(13, 25);
+	//matrix.add(15, 25);
+	//matrix.add(18, 26);
+	//matrix.add(20, 26);
+	//matrix.add(23, 25);
+	//matrix.add(25, 25);
+	//matrix.add(28, 24);
+	//matrix.add(30, 23);
+
 	matrix.printM();
 
 	std::cout << "\n\n";
@@ -270,6 +297,7 @@ int main()
 		window.clear(sf::Color(200,200,200,255));
 
 		axis_cross.draw();
+		//window.draw(text);
 
 		window.display();
 	}
