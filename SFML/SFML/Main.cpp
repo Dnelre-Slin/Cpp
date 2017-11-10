@@ -118,7 +118,7 @@ float mathFunc(float x)
 	//return (-0.5*powf(x, 2) + 2.5 * x - 1);
 }
 
-float mFunc2(float x, float *parameters, const unsigned int size)
+float mFunc(float x, float *parameters, const unsigned int size)
 {
 	float sum = 0;
 	for (register unsigned int i = 0; i < size; i++)
@@ -131,14 +131,64 @@ float mFunc2(float x, float *parameters, const unsigned int size)
 	//		parameters[6] * powf(x, 4) + parameters[7] * powf(x, 3) + parameters[8] * powf(x, 2) +
 	//		parameters[9] * x + parameters[10]);
 
-	return -sum;
+	return sum;
 	//return 0.5*x;
 	//return sum;
 }
 
-float mFunc(float x, float *parameters, const unsigned int size)
+float mFunc3(float x, float *parameters, const unsigned int size)
+{
+	float PI = 3.141592653589793;
+	float sum_result = 0;
+	
+	for (unsigned int n = 1; n < 10; n++)
+	{
+		sum_result += ((cosf((2 * PI*n) / 3) - 1) / n) * sin((2 * PI*n*x) / 3);
+	}
+
+	return sum_result;
+	//return 0.5*x;
+	//return sum;
+}
+
+float mFunc2(float x, float *parameters, const unsigned int size)
 {
 	return 0.000001828181565f * powf(x,6.f) - 0.000165292397661f * powf(x, 5.f) + 0.005664961013645f * powf(x, 4.f) - 0.09196418128655f *powf(x, 3.f) + 0.713937621832359f * powf(x, 2.f) - 2.194517543859649f * x + 25.567042606516292f;
+}
+
+void updateParams(Axis &axis)
+{
+	std::vector<sf::Vector2f> temp;
+	std::vector<sf::Vector2f> hum;
+
+	Matrix tempMat;
+	Matrix humMat;
+
+	esf::readCSV(temp, hum);
+
+
+	for (unsigned int i = temp.size() - 10; i < temp.size(); i++)
+	{
+		tempMat.add(temp[i].x - temp[temp.size() - 10].x + 1.f, temp[i].y);
+		humMat.add(hum[i].x - hum[temp.size() - 10].x + 1.f, hum[i].y);
+	}
+
+	~tempMat;
+	~humMat;
+
+	std::vector<float> vf1;
+	std::vector<float> vf2;
+	std::vector<double> vd1 = tempMat.getGaused();
+	std::vector<double> vd2 = humMat.getGaused();
+
+	for (unsigned int i = 0; i < vd1.size(); i++)
+	{
+		vf1.push_back((float)vd1[i]);
+		vf2.push_back((float)vd2[i]);
+	}
+
+	axis.updateParams(vf1, 0);
+	axis.updateParams(vf2, 1);
 }
 
 int main()
@@ -159,7 +209,8 @@ int main()
 
 	Axis axis_cross(window, x_space, x_space_size, y_space, y_space_size, sf::Color::Black);
 
-	Graph graph(mFunc, sf::Color::Red);
+	Graph tempGraph(mFunc, sf::Color::Red);
+	Graph humGraph(mFunc, sf::Color::Blue);
 	//Graph co_graph(cosf, sf::Color::Blue);
 
 	//axis_cross.addGraph(co_graph);
@@ -193,15 +244,28 @@ int main()
 	//mat.push_back(v);
 
 
-	Matrix matrix;
 	//matrix.m_matrix = mat;
-	matrix.add(1, 24);
-	matrix.add(5, 24);
-	matrix.add(10, 25);
-	matrix.add(15, 25);
-	matrix.add(20, 26);
-	matrix.add(25, 25);
-	matrix.add(30, 24);
+	//matrix.add(10, 24);
+	//matrix.add(100, 24);
+	//matrix.add(200, 25);
+	//matrix.add(300, 25);
+	//matrix.add(400, 26);
+	//matrix.add(500, 25);
+	//matrix.add(600, 24);
+	//matrix.add(700, 23);
+	//matrix.add(800, 22);
+	//matrix.add(900, 21);
+	//matrix.add(50, 24);
+	//matrix.add(55, 25);
+	//matrix.add(60, 25);
+	//matrix.add(65, 26);
+	//matrix.add(70, 25);
+	//matrix.add(75, 24);
+	//matrix.add(80, 23);
+	//matrix.add(85, 22);
+	//matrix.add(90, 21);
+	//matrix.add(95, 21);
+	//matrix.add(100, 19);
 
 	//matrix.add(13, 23);
 	//matrix.add(16, 21);
@@ -234,20 +298,55 @@ int main()
 	//matrix.add(25, 25);
 	//matrix.add(28, 24);
 	//matrix.add(30, 23);
+	//Matrix matrix1;
+	//Matrix matrix2;
 
-	matrix.printM();
+	//std::cout << "DEBUG 1\n";
 
-	std::cout << "\n\n";
+	//std::vector<sf::Vector2f> temp;
+	//std::vector<sf::Vector2f> hum;
 
-	~matrix;
+	//esf::readCSV(temp, hum);
 
-	matrix.printM();
+	//std::cout << "DEBUG 2\n";
 
-	matrix.printGauss();
+	//for (unsigned int i = temp.size() - 10; i < temp.size(); i++)
+	//{
+	//	matrix1.add(temp[i].x - temp[temp.size() - 10].x + 1.f, temp[i].y);
+	//	matrix2.add(hum[i].x - hum[temp.size() - 10].x + 1.f, hum[i].y);
+	//}
 
-	graph.setParams(matrix.getGaused());
+	//matrix1.printM();
 
-	axis_cross.addGraph(graph);
+	//std::cout << "\n\n";
+
+	//~matrix1;
+	//~matrix2;
+
+	//matrix1.printM();
+
+	//matrix1.printGauss();
+
+	//std::vector<float> vf1;
+	//std::vector<float> vf2;
+	//std::vector<double> vd1 = matrix1.getGaused();
+	//std::vector<double> vd2 = matrix2.getGaused();
+
+	//for (unsigned int i = 0; i < vd1.size(); i++)
+	//{
+	//	vf1.push_back((float)vd1[i]);
+	//	vf2.push_back((float)vd2[i]);
+	//}
+
+	//tempGraph.setParams(vf1);
+	//humGraph.setParams(vf2);
+
+	axis_cross.addGraph(tempGraph);
+	axis_cross.addGraph(humGraph);
+
+	updateParams(axis_cross);
+
+	clock_t update_timer = clock();
 
 	while (window.isOpen())
 	{
@@ -277,21 +376,24 @@ int main()
 			}
 			else if (mouse_button_held && event.type == sf::Event::MouseMoved)  //Mouse drag.
 			{
-				axis_cross.move(sf::Vector2f(event.mouseMove.x - mouse_moved.x, event.mouseMove.y - mouse_moved.y));
+				//axis_cross.move(sf::Vector2f(event.mouseMove.x - mouse_moved.x, event.mouseMove.y - mouse_moved.y));
 				mouse_moved.x = (float)event.mouseMove.x;
 				mouse_moved.y = (float)event.mouseMove.y;
 				break;
 			}
 			else if (event.type == sf::Event::MouseWheelScrolled && event.mouseWheelScroll.delta > 0)
 			{
-				axis_cross.scale(1.0f + (event.mouseWheelScroll.delta / 10.0f));
+				//axis_cross.scale(1.0f + (event.mouseWheelScroll.delta / 10.0f));
 			}
 			else if (event.type == sf::Event::MouseWheelScrolled && event.mouseWheelScroll.delta < 0)
 			{
 				//axis_cross.scaleX(1.0f / (1.0f + (event.mouseWheelScroll.delta / 10)));
-				axis_cross.scale(1.0f / pow(1.1f,-event.mouseWheelScroll.delta));
+				//axis_cross.scale(1.0f / pow(1.1f,-event.mouseWheelScroll.delta));
 			}
 		}
+
+		if (clock() > update_timer + 60000)
+			updateParams(axis_cross);
 
 
 		window.clear(sf::Color(200,200,200,255));

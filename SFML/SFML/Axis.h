@@ -46,5 +46,7 @@ public:
 
 	void addGraph(const Graph &graph);
 
+	void updateParams(const std::vector<float> &params, unsigned int index) { m_graphs[index].setParams(params); }
+
 	void draw();
 };

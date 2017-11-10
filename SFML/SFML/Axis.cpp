@@ -189,7 +189,7 @@ void Axis::drawYmarks(float _spacing, const sf::Color &color, float line_length,
 	{
 		line_marker.setPosition(sf::Vector2f(x_mark_spot, y_mark_spot));
 		m_text.setString(esf::toStr(-count));
-		m_text.setPosition(sf::Vector2f(x_mark_spot - 10, y_mark_spot - 5));
+		m_text.setPosition(sf::Vector2f(x_mark_spot - 20, y_mark_spot - 5));
 		m_window->draw(line_marker);
 		m_window->draw(m_text);
 		y_mark_spot -= spacing;
@@ -203,7 +203,7 @@ void Axis::drawYmarks(float _spacing, const sf::Color &color, float line_length,
 	{
 		line_marker.setPosition(sf::Vector2f(x_mark_spot, y_mark_spot));
 		m_text.setString(esf::toStr(-count));
-		m_text.setPosition(sf::Vector2f(x_mark_spot - 10, y_mark_spot - 5));
+		m_text.setPosition(sf::Vector2f(x_mark_spot - 20, y_mark_spot - 5));
 		m_window->draw(line_marker);
 		m_window->draw(m_text);
 		y_mark_spot += spacing;
@@ -222,7 +222,7 @@ Axis::Axis(sf::RenderWindow &window, float *x_spacing_groups, unsigned int x_spa
 	m_x_axis = esf::getLine(sf::Vector2f(0.0f, y_size / 2.0f), sf::Vector2f(x_size, y_size / 2.0f), 1.0f, color);
 	//m_y_axis = esf::getLine(sf::Vector2f(20.0f, 0.0f), sf::Vector2f(20.0f, y_size), 1.0f, color);
 	m_y_axis = esf::getLine(sf::Vector2f(x_size / 3.0f, 0.0f), sf::Vector2f(x_size / 3.0f, y_size), 1.0f, color);
-	move(sf::Vector2f(-250, 0));
+	move(sf::Vector2f(-220, 0));
 
 	m_x_mark_spacing = x_mark_spacing;
 	m_y_mark_spacing = y_mark_spacing;
@@ -230,6 +230,9 @@ Axis::Axis(sf::RenderWindow &window, float *x_spacing_groups, unsigned int x_spa
 
 	x_group.set(x_spacing_groups, x_spacing_groups_size, x_mark_spacing);
 	y_group.set(y_spacing_groups, y_spacing_groups_size, y_mark_spacing);
+
+	scaleX(5.7f);
+	scaleY(.4f);
 
 	//sf::Font font;
 	if (!m_font.loadFromFile("fonts/times.ttf"))
@@ -249,31 +252,11 @@ void Axis::setColor(const sf::Color &color)
 void Axis::scaleX(float scale_value)
 {
 	x_group.scale(scale_value);
-	//float new_x_scale = m_x_mark_spacing * scale_value;
-
-
-
-	//if ((scale_value < 1 && m_x_mark_spacing > 2.0f) ||
-	//	(scale_value > 1 && m_x_mark_spacing < 1000.0f))
-	//	m_x_mark_spacing *= scale_value;
-	//for (sf::RectangleShape &xMark : m_x_axis_marks)
-	//{
-	//	xMark.setPosition((scale_value * (xMark.getPosition().x - m_y_axis.getPosition().x)) +
-	//									  m_y_axis.getPosition().x, xMark.getPosition().y);
-	//}
 }
 
 void Axis::scaleY(float scale_value)
 {
 	y_group.scale(scale_value);
-	//if ((scale_value < 1 && m_y_mark_spacing > 2.0f) ||
-	//	(scale_value > 1 && m_y_mark_spacing < 1000.0f))
-	//	m_y_mark_spacing *= scale_value;
-	//for (sf::RectangleShape &yMark : m_y_axis_marks)
-	//{
-	//	yMark.setPosition(yMark.getPosition().x, (scale_value * (yMark.getPosition().y - m_x_axis.getPosition().y)) + 
-	//															 m_x_axis.getPosition().y);
-	//}
 }
 
 void Axis::scale(float scale_value)

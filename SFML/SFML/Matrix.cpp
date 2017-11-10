@@ -1,30 +1,50 @@
 #include "Matrix.h"
+#include <cmath>
 
-void Matrix::printV(std::vector<float>& v)
+void Matrix::printV(std::vector<double>& v)
 {
 	std::cout << "[  ";
-	for (float &f : v)
+	for (double &d : v)
 	{
-		std::cout << f << "  ";
+		std::cout << d << "  ";
 	}
 	std::cout << "]\n";
+}
+
+bool Matrix::swapRows(unsigned int row, unsigned int column)
+{
+	for (unsigned int i = row + 1; i < m_matrix.size(); i++)
+	{
+		if (m_matrix[i][column] != 0.f)
+		{
+			std::vector<double> temp = m_matrix[i];
+			m_matrix[i] = m_matrix[row];
+			m_matrix[row] = temp;
+			return true;
+		}
+	}
+	return false;
 }
 
 void Matrix::operator~()
 {
 	for (unsigned int i = 0; i < m_matrix.size(); i++) // i is the index of the rows in the matrix.
 	{
-		float pos0 = m_matrix[i][i]; // Get 1 at position 0.
+		double pos0 = m_matrix[i][i]; // Get 1 at position 0.
+		if (pos0 == 0 && !swapRows(i, i))
+			continue;
 		for (unsigned int j = 0; j < m_matrix[i].size() - i; j++) //j is the index of the colons in the matrix.
 		{
+			if (isnan(pos0))
+				std::cout << "DEBUG\n";
 			m_matrix[i][i + j] /= pos0;
 		}
 		for (unsigned int k = 0; k < m_matrix.size(); k++) // k is the index of the rows below row i.
 		{
 			if (k != i)
 			{
-				float nr = m_matrix[k][i];
-				for (unsigned int l = 0; l < m_matrix[k].size(); l++) // l is index of colons.
+				double nr = m_matrix[k][i];
+				for (unsigned int l = 0; l < m_matrix[k].size(); l++) // l is index of columns.
 				{
 					m_matrix[k][l] = m_matrix[k][l] - (m_matrix[i][l] * nr);
 				}
@@ -33,9 +53,9 @@ void Matrix::operator~()
 	}
 }
 
-void Matrix::add(float x, float y)
+void Matrix::add(double x, double y)
 {
-	std::vector<float> v;
+	std::vector<double> v;
 	//v.push_back(powf(x, 20));
 	//v.push_back(powf(x, 19));
 	//v.push_back(powf(x, 18));
@@ -47,9 +67,9 @@ void Matrix::add(float x, float y)
 	//v.push_back(powf(x, 12));
 	//v.push_back(powf(x, 11));
 	//v.push_back(powf(x, 10));
-	//v.push_back(powf(x, 9));
-	//v.push_back(powf(x, 8));
-	//v.push_back(powf(x, 7));
+	v.push_back(powf(x, 9));
+	v.push_back(powf(x, 8));
+	v.push_back(powf(x, 7));
 	v.push_back(powf(x, 6));
 	v.push_back(powf(x, 5));
 	v.push_back(powf(x, 4));
@@ -60,9 +80,10 @@ void Matrix::add(float x, float y)
 	v.push_back(y);
 	m_matrix.push_back(v);
 }
-std::vector<float> Matrix::getGaused()
+
+std::vector<double> Matrix::getGaused()
 {
-	std::vector<float> v;
+	std::vector<double> v;
 	for (unsigned int i = 0; i < m_matrix.size(); i++)
 	{
 		v.push_back(m_matrix[i][m_matrix[i].size() - 1]);
@@ -71,7 +92,7 @@ std::vector<float> Matrix::getGaused()
 }
 void Matrix::printGauss()
 {
-	std::vector<float> v = getGaused();
+	std::vector<double> v = getGaused();
 	for (unsigned int i = 0; i < v.size(); i++)
 	{
 		std::cout << v[i] << '\n';
@@ -99,7 +120,7 @@ void Matrix::printGauss()
 
 void Matrix::printM()
 {
-	for (std::vector<float> &v : m_matrix)
+	for (std::vector<double> &v : m_matrix)
 	{
 		printV(v);
 	}

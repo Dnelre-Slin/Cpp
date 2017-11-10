@@ -16,7 +16,7 @@ public:
 
 	void set(float(*func)(float, float*, const unsigned int), const sf::Color &color = sf::Color::Black);
 	inline void setColor(const sf::Color &color) { m_color = color; }
-	inline void setParams(std::vector<float> params) { m_params = params; }
+	inline void setParams(const std::vector<float> &params) { m_params = params; }
 
 	void draw(sf::RenderWindow &window, const sf::Vector2f &origo, float x_spacing, float y_spacing);
 };

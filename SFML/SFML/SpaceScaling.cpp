@@ -73,5 +73,5 @@ void SpaceScaling::scale(float _scale)
 	}
 	m_scale = new_scale;
 
-	std::cout << "DEBUG: " << m_scale << "  |  " << m_index << '\n';
+	//std::cout << "DEBUG: " << m_scale << "  |  " << m_index << '\n';
 }

@@ -1,13 +1,9 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include <iostream>
 #include <string>
 #include <sstream>
-//#include "Polygon2D.h"
-//
-//#include "Polygon2D.cpp"
-//#include "Line2D.cpp"
-//#include "Point2D.cpp"
-
+#include <fstream>
 
 namespace esf
 {
@@ -25,4 +21,5 @@ namespace esf
 		return ss.str();
 	}
 
+	void readCSV(std::vector<sf::Vector2f> &temp, std::vector<sf::Vector2f> &hum);
 }
